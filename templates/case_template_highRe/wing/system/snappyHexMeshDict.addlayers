@@ -14,9 +14,9 @@ FoamFile
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-castellatedMesh true;
-snap            true;
-addLayers       false;
+castellatedMesh false;
+snap            false;
+addLayers       true;
 
 geometry
 {
@@ -47,7 +47,7 @@ castellatedMeshControls
     (
         { 
         file "wing.eMesh"; 
-        levels ((0.01 6) (0.03 5) (0.09 4) (0.18 3) (0.30 2));
+        levels ((0.02 6) (0.04 5) (0.12 4) (0.24 3) (0.30 2));
         }
     );
 
@@ -89,7 +89,39 @@ snapControls
 
 addLayersControls
 {
+    relativeSizes true;
 
+    layers
+    {
+        wing
+        {
+            nSurfaceLayers 6;
+        }
+    }
+
+    /*meshShrinker    displacementMotionSolver;
+    solver          displacementLaplacian;
+    displacementLaplacianCoeffs
+    {
+        diffusivity     quadratic inverseDistance (walls);
+    }*/
+
+    expansionRatio 1.2;
+    finalLayerThickness 0.25;
+    minThickness 1e-8;
+    nGrow 3;
+    featureAngle 30;
+    slipFeatureAngle 10;
+    //layerTerminationAngle -180;
+    nRelaxIter 5;
+    nSmoothSurfaceNormals 1;
+    nSmoothNormals 3;
+    nSmoothThickness 10;
+    maxFaceThicknessRatio 0.5;
+    maxThicknessToMedialRatio 0.3;
+    minMedialAxisAngle 90;
+    nBufferCellsNoExtrude 0;
+    nLayerIter 50;
 }
 
 meshQualityControls
@@ -98,11 +130,11 @@ meshQualityControls
     maxBoundarySkewness 4;
     maxInternalSkewness 4;
     maxConcave 80;
-    minVol -1E30;
-    minTetQuality -1E30;
+    minVol -1e+30;
+    minTetQuality -1e+30;
     minArea -1;
     minTwist 0.02;
-    minDeterminant 0.001;
+    minDeterminant -1;
     minFaceWeight 0.05;
     minVolRatio 0.01;
     minTriangleTwist -1;

@@ -5,14 +5,15 @@ import shutil
 
 template_dir = 'templates'
 geometry_dir = 'wing_geometry'
-kinematic_data_dir = '../3dbm_kinematic_cases'
-out_job_array_dir = '../flapping_3dbenchmark_job_pack'
+kinematic_data_dir = 'kinematic_cases_WCFinal'
+out_job_array_dir = 'WCFinal'
 #-------------------------------------------------
 cwd = os.getcwd()
 template_dir_path = os.path.join(cwd, template_dir)
 geometry_dir_path = os.path.join(cwd, geometry_dir)
-kinematic_data_dir_path = os.path.join(cwd, kinematic_data_dir)
-output_folder = os.path.join(cwd, out_job_array_dir)
+kinematic_data_dir_path = os.path.join(os.path.dirname(cwd),
+                                       kinematic_data_dir)
+output_folder = os.path.join(os.path.dirname(cwd), out_job_array_dir)
 
 if os.path.exists(output_folder):
     shutil.rmtree(output_folder)
@@ -28,13 +29,14 @@ case_names = [
 ]
 
 for case in case_names:
-    template_case = 'case_template'
+    # template_case = 'case_template'
+    template_case = 'case_template_highRe'
     template_folder = os.path.join(template_dir_path, template_case)
     case_folder = os.path.join(output_folder, case)
     shutil.copytree(template_folder, case_folder)
 
     case_geometry = os.path.join(geometry_dir_path,
-                                 case.split('__')[0] + '.STL')
+                                 case.split('__')[1] + '.STL')
     case_kinematic_data = os.path.join(kinematic_data_dir_path, case + '.dat')
     case_kinematic_image = os.path.join(kinematic_data_dir_path, case + '.png')
     case_cf_file = os.path.join(kinematic_data_dir_path, case + '.cf')

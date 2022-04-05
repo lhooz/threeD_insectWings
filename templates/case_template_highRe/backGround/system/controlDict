@@ -10,50 +10,54 @@ FoamFile
     version     2.0;
     format      ascii;
     class       dictionary;
-    object      fvSchemes;
+    object      controlDict;
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-ddtSchemes
-{
-    default         backward;
-    //default         CrankNicolson 0.9;
-    //default         Euler;
-}
+application     pimpleFoam;
 
-gradSchemes
-{
-    //default        Gauss linear;
-    //default 	     cellMDLimited Gauss linear 0.5;
-    //default 	     cellMDLimited leastSquares 1.0;
-    default 	     cellLimited Gauss linear 1.0;
-}
+startFrom       startTime;
 
-divSchemes
-{
-    default         	none;
+startTime       0;
 
-    //div(phi,U)      	Gauss linear;
-    div(phi,U)      	Gauss limitedLinearV 1.0;
-    //div(phi,U)      	Gauss linearUpwindV default;
-    //div(phi,U)      	Gauss upwind;
+stopAt          endTime;
 
-    div((nuEff*dev2(T(grad(U))))) Gauss linear;
-}
+endTime         5.0; //1.0;
 
-laplacianSchemes
-{
-    default         Gauss linear corrected;
-}
+deltaT          1e-3;
 
-interpolationSchemes
-{
-    default         linear;
-}
+writeControl    adjustableRunTime;
 
-snGradSchemes
-{
-    default         corrected;
-}
+writeInterval   0.05;
+
+purgeWrite      20;
+
+writeFormat     ascii;
+
+writePrecision  10;
+
+writeCompression off;
+
+timeFormat      general;
+
+timePrecision   10;
+
+runTimeModifiable true;
+
+/*adjustTimeStep  yes;
+
+maxCo           10;
+
+maxDeltaT       0.1;*/
+
 
 // ************************************************************************* //
+
+functions
+{
+#include "FOforceCoefficients"
+#include "FOQ"
+#include "FOLambda2"
+#include "FOvorticity"
+};
+

@@ -14,46 +14,19 @@ FoamFile
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-ddtSchemes
-{
-    default         backward;
-    //default         CrankNicolson 0.9;
-    //default         Euler;
-}
-
 gradSchemes
 {
-    //default        Gauss linear;
-    //default 	     cellMDLimited Gauss linear 0.5;
-    //default 	     cellMDLimited leastSquares 1.0;
-    default 	     cellLimited Gauss linear 1.0;
+    default 	     Gauss linear;
 }
 
 divSchemes
 {
-    default         	none;
-
-    //div(phi,U)      	Gauss linear;
-    div(phi,U)      	Gauss limitedLinearV 1.0;
-    //div(phi,U)      	Gauss linearUpwindV default;
-    //div(phi,U)      	Gauss upwind;
-
-    div((nuEff*dev2(T(grad(U))))) Gauss linear;
+    default          Gauss linear;
 }
 
 laplacianSchemes
 {
     default         Gauss linear corrected;
-}
-
-interpolationSchemes
-{
-    default         linear;
-}
-
-snGradSchemes
-{
-    default         corrected;
 }
 
 // ************************************************************************* //

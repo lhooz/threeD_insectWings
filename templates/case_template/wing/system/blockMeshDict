@@ -34,7 +34,7 @@ geometry
     }*/
 }
 
-n    44;
+n    25;
 
 // Rough approximation of corner points
 v    0.5773502;

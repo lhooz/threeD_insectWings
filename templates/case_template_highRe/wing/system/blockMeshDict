@@ -23,37 +23,36 @@ geometry
     {
         type   sphere;
         origin (0 0 0);
-        radius 1.1;
+        radius 1;
     }
-
+/*
     innerSphere
     {
         type   sphere;
         origin (0 0 0);
-        radius 1;
-    }
+        radius 0.6;
+    }*/
 }
 
-n    25;
-nradial 4;
+n    50;
 
 // Rough approximation of corner points
 v    0.5773502;
 mv  -0.5773502;
-vh   0.2886751;
-mvh -0.2886751;
+vh   0.3;
+mvh -0.3;
 
 vertices
 (
     // Inner block points
-    project ($mvh $mvh $mvh) (innerSphere)
-    project ( $vh $mvh $mvh) (innerSphere)
-    project ( $vh  $vh $mvh) (innerSphere)
-    project ($mvh  $vh $mvh) (innerSphere)
-    project ($mvh $mvh  $vh) (innerSphere)
-    project ( $vh $mvh  $vh) (innerSphere)
-    project ( $vh  $vh  $vh) (innerSphere)
-    project ($mvh  $vh  $vh) (innerSphere)
+    ($mvh $mvh $mvh)
+    ( $vh $mvh $mvh)
+    ( $vh  $vh $mvh)
+    ($mvh  $vh $mvh)
+    ($mvh $mvh  $vh)
+    ( $vh $mvh  $vh)
+    ( $vh  $vh  $vh)
+    ($mvh  $vh  $vh)
 
     // Outer block points
     project ($mv $mv $mv) (sphere)
@@ -68,13 +67,13 @@ vertices
 
 blocks
 (
-    /*hex ( 0  1  2  3  4  5  6  7) ($n $n $n) simpleGrading (1 1 1)*/
-    hex ( 9  8 12 13  1  0  4  5) ($n $n $nradial) simpleGrading (1 1 1)
-    hex (10  9 13 14  2  1  5  6) ($n $n $nradial) simpleGrading (1 1 1)
-    hex (11 10 14 15  3  2  6  7) ($n $n $nradial) simpleGrading (1 1 1)
-    hex ( 8 11 15 12  0  3  7  4) ($n $n $nradial) simpleGrading (1 1 1)
-    hex ( 8  9 10 11  0  1  2  3) ($n $n $nradial) simpleGrading (1 1 1)
-    hex (13 12 15 14  5  4  7  6) ($n $n $nradial) simpleGrading (1 1 1)
+    hex ( 0  1  2  3  4  5  6  7) ($n $n $n) simpleGrading (1 1 1)
+    hex ( 9  8 12 13  1  0  4  5) ($n $n $n) simpleGrading (1 1 1)
+    hex (10  9 13 14  2  1  5  6) ($n $n $n) simpleGrading (1 1 1)
+    hex (11 10 14 15  3  2  6  7) ($n $n $n) simpleGrading (1 1 1)
+    hex ( 8 11 15 12  0  3  7  4) ($n $n $n) simpleGrading (1 1 1)
+    hex ( 8  9 10 11  0  1  2  3) ($n $n $n) simpleGrading (1 1 1)
+    hex (13 12 15 14  5  4  7  6) ($n $n $n) simpleGrading (1 1 1)
 );
 
 edges
@@ -97,31 +96,24 @@ edges
 
 
     // Inner edges
-    project  0  1 (innerSphere)
-    project  2  3 (innerSphere)
-    project  6  7 (innerSphere)
-    project  4  5 (innerSphere)
+    line  0  1
+    line  2  3
+    line  6  7
+    line  4  5
 
-    project  0  3 (innerSphere)
-    project  1  2 (innerSphere)
-    project  5  6 (innerSphere)
-    project  4  7 (innerSphere)
+    line  0  3
+    line  1  2
+    line  5  6
+    line  4  7
 
-    project  0  4 (innerSphere)
-    project  1  5 (innerSphere)
-    project  2  6 (innerSphere)
-    project  3  7 (innerSphere)
+    line  0  4
+    line  1  5
+    line  2  6
+    line  3  7
 );
 
 faces
 (
-    project ( 0  4  7  3) innerSphere
-    project ( 2  6  5  1) innerSphere
-    project ( 1  5  4  0) innerSphere
-    project ( 3  7  6  2) innerSphere
-    project ( 0  3  2  1) innerSphere
-    project ( 4  5  6  7) innerSphere
-
     project ( 8 12 15 11) sphere
     project (10 14 13  9) sphere
     project ( 9 13 12  8) sphere
@@ -132,21 +124,7 @@ faces
 
 boundary
 (
-    AMISlave
-    {
-        type patch;
-        faces
-        (
-            ( 0  4  7  3)
-            ( 2  6  5  1)
-            ( 1  5  4  0)
-            ( 3  7  6  2)
-            ( 0  3  2  1)
-            ( 4  5  6  7)
-        );
-    }
-
-    farField
+    AMI
     {
         type patch;
         faces

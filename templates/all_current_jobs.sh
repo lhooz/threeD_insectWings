@@ -1,16 +1,13 @@
 #!/bin/bash --login
 
-#$ -pe smp.pe 32
 #$ -cwd
+#$ -pe smp.pe 32
 
-#$ -m bea
-#$ -M hao.lee0019@yahoo.com
-
-#$ -t 1-6
+#$ -t 1-24
 mkdir ./SIM_RESULTS
 readarray -t JOB_DIRS < <(find . -mindepth 1 -maxdepth 1 -name '*Re*' -printf '%P\n')
 
-module load apps/gcc/openfoam/v1906
+module load apps/gcc/openfoam/v2012
 module load apps/binapps/paraview/5.7.0
 source $foamDotFile
 
